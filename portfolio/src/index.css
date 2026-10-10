@@ -1,0 +1,153 @@
+@import 'tailwindcss';
+
+:root,
+:root[data-theme='dark'] {
+  --page-bg: #101015;
+  --surface-bg: #191922;
+  --card-bg: #20202b;
+  --text-primary: #f6f2fa;
+  --text-secondary: #afa5bb;
+  --accent: #d9a4ff;
+  --pink: #f0a6d5;
+  --purple: #a78bfa;
+  --border: #38313f;
+  --image-surface: #ffffff;
+}
+
+:root[data-theme='light'] {
+  --page-bg: #faf9fc;
+  --surface-bg: #ffffff;
+  --card-bg: #ffffff;
+  --text-primary: #24202c;
+  --text-secondary: #746a80;
+  --accent: #8954c0;
+  --pink: #eba4c7;
+  --purple: #8062c4;
+  --border: #e5ddea;
+  --image-surface: #ffffff;
+}
+
+@theme {
+  --font-serif: 'Space Grotesk', 'Noto Sans SC', sans-serif;
+  --font-sans: 'Space Grotesk', 'Noto Sans SC', sans-serif;
+  --font-hand: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  --color-paper: var(--page-bg);
+  --color-ink: var(--text-primary);
+  --color-muted: var(--text-secondary);
+  --color-line: var(--border);
+  --color-blush: var(--pink);
+  --color-blush-deep: var(--pink);
+  --color-lilac: var(--accent);
+  --color-lilac-deep: var(--accent);
+  --color-butter: #f4cf5d;
+  --color-surface: var(--surface-bg);
+  --color-card: var(--card-bg);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-padding-top: 6.5rem;
+  background: var(--page-bg);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--page-bg);
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--border) 22%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--border) 22%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  transition: background-color 220ms ease, color 220ms ease;
+}
+
+body::before {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  content: '';
+  background: linear-gradient(to bottom, var(--page-bg) 0, transparent 26rem);
+  pointer-events: none;
+}
+
+a, button { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; }
+
+::selection { background: var(--accent); color: var(--page-bg); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.surface { background: var(--surface-bg); }
+
+.panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  box-shadow: 8px 8px 0 color-mix(in srgb, var(--accent) 13%, transparent);
+}
+
+.tech-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid var(--border);
+  background: var(--surface-bg);
+  padding: 0.36rem 0.58rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cover-frame img { transform: scale(1); }
+
+.project-card {
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  box-shadow: 10px 10px 0 color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.project-card::before {
+  position: absolute;
+  z-index: 2;
+  top: -1px;
+  left: -1px;
+  width: 4.5rem;
+  height: 4px;
+  content: '';
+  background: var(--accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  .cover-frame img { transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .group:hover .cover-frame img,
+  .group:focus-within .cover-frame img { transform: scale(1.025); }
+  .focus-card,
+  .project-card { transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease; }
+  .focus-card:hover,
+  .focus-card:focus-within,
+  .project-card:hover,
+  .project-card:focus-within {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 10px 10px 0 color-mix(in srgb, var(--accent) 20%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
