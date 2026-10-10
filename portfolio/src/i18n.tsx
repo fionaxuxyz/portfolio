@@ -1,28 +1,14 @@
 import { useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
-import { defaultLocale, localeStorageKey, type Locale } from './config'
+import { defaultLocale, type Locale } from './config'
 import type { Copy } from './types'
 import { LanguageContext, type LanguageContextValue } from './language-context'
 
-function readLocale(): Locale {
-  try {
-    const saved = localStorage.getItem(localeStorageKey)
-    if (saved === 'zh' || saved === 'en') return saved
-  } catch {
-    /* private browsing */
-  }
-  return defaultLocale
-}
-
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(readLocale)
+  const [locale, setLocaleState] = useState<Locale>(defaultLocale)
 
   const setLocale = (next: Locale) => {
     setLocaleState(next)
-    try {
-      localStorage.setItem(localeStorageKey, next)
-    } catch {
-      /* ignore */
-    }
+
   }
 
   useEffect(() => {
