@@ -8,18 +8,8 @@ interface ThemeContextValue {
 }
 
 const ThemeContext = createContext<ThemeContextValue | null>(null)
-const storageKey = 'fiona-theme'
-
-function readTheme(): Theme {
-  try {
-    return localStorage.getItem(storageKey) === 'light' ? 'light' : 'dark'
-  } catch {
-    return 'dark'
-  }
-}
-
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(readTheme)
+  const [theme, setTheme] = useState<Theme>('dark')
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -34,15 +24,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     () => ({
       theme,
       toggleTheme: () => {
-        setTheme((current) => {
-          const next = current === 'dark' ? 'light' : 'dark'
-          try {
-            localStorage.setItem(storageKey, next)
-          } catch {
-            /* private browsing */
-          }
-          return next
-        })
+        setTheme((current) => current === 'dark' ? 'light' : 'dark')
       },
     }),
     [theme],
