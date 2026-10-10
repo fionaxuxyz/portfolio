@@ -23,9 +23,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const value = useMemo(
     () => ({
       theme,
-      toggleTheme: () => {
-        setTheme((current) => current === 'dark' ? 'light' : 'dark')
-      },
+      toggleTheme: () => setTheme((current) => current === 'dark' ? 'light' : 'dark'),
     }),
     [theme],
   )
