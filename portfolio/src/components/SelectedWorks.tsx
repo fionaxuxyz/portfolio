@@ -21,7 +21,11 @@ export function SelectedWorks() {
   }
 
   const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
-    if (event.button !== 0 || (event.target as HTMLElement).closest('a, button, input, select, textarea, [role="button"]')) return
+    if (event.button !== 0) return
+    if ((event.target as HTMLElement).closest('a, button, input, select, textarea, [role="button"]')) {
+      didDrag.current = false
+      return
+    }
     dragStart.current = event.clientX
     didDrag.current = false
     setDragging(true)
@@ -81,6 +85,10 @@ export function SelectedWorks() {
           onPointerUp={finishDrag}
           onPointerCancel={finishDrag}
           onClickCapture={(event) => {
+            if ((event.target as HTMLElement).closest('a, button, input, select, textarea, [role="button"]')) {
+              didDrag.current = false
+              return
+            }
             if (!didDrag.current) return
             event.preventDefault()
             event.stopPropagation()
