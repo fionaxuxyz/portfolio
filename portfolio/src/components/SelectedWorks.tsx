@@ -21,7 +21,7 @@ export function SelectedWorks() {
   }
 
   const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
-    if (event.button !== 0 || (event.target as HTMLElement).closest('button')) return
+    if (event.button !== 0 || (event.target as HTMLElement).closest('a, button, input, select, textarea, [role="button"]')) return
     dragStart.current = event.clientX
     didDrag.current = false
     setDragging(true)
